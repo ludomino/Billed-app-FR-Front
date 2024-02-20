@@ -1,7 +1,7 @@
 .content {
   width: 100%;
-  margin-top: 76px; 
-  margin-left: 76px; 
+  margin-top: 76px;
+  margin-left: 76px;
   margin-right: 76px;
 }
 
@@ -14,7 +14,7 @@
 }
 
 .content-header {
-  width: 100%; 
+  width: 100%;
   display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
   display: -ms-flexbox;  /* TWEENER - IE 10 */
   display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
@@ -112,4 +112,8 @@ tr td:nth-of-type(5) {
 
 .bill-proof-container {
   overflow: scroll;
+}
+
+#modaleFile {
+  background-color: rgba(0, 0, 0, 0.459);
 }

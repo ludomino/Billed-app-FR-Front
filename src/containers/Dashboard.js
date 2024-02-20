@@ -2,7 +2,6 @@ import { formatDate } from '../app/format.js'
 import DashboardFormUI from '../views/DashboardFormUI.js'
 import BigBilledIcon from '../assets/svg/big_billed.js'
 import { ROUTES_PATH } from '../constants/routes.js'
-import USERS_TEST from '../constants/usersTest.js'
 import Logout from "./Logout.js"
 
 export const filteredBills = (data, status) => {
@@ -10,17 +9,14 @@ export const filteredBills = (data, status) => {
     data.filter(bill => {
       let selectCondition
 
-      // in jest environment
       if (typeof jest !== 'undefined') {
         selectCondition = (bill.status === status)
       }
-      /* istanbul ignore next */
       else {
-        // in prod environment
         const userEmail = JSON.parse(localStorage.getItem("user")).email
         selectCondition =
           (bill.status === status) &&
-          ![...USERS_TEST, userEmail].includes(bill.email)
+          ![userEmail].includes(bill.email)
       }
 
       return selectCondition
@@ -174,8 +170,6 @@ export default class {
     }
   }
 
-  // not need to cover this function by tests
-  /* istanbul ignore next */
   updateBill = (bill) => {
     if (this.store) {
     return this.store
