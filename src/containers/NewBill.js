@@ -17,6 +17,7 @@ export default class NewBill {
     this.billId = null;
     new Logout({ document, localStorage, onNavigate });
   }
+
   handleChangeFile = (e) => {
     e.preventDefault();
 
@@ -88,7 +89,7 @@ export default class NewBill {
         .bills()
         .update({ data: JSON.stringify(bill), selector: this.billId })
         .then(() => {
-          this.onNavigate(ROUTES_PATH["Bills"]);
+          this.onNavigate(ROUTES_PATH['Bills'])
         })
         .catch((error) => console.error(error));
     }
