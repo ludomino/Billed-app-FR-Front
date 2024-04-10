@@ -1,50 +1,50 @@
-import { ROUTES_PATH } from "../constants/routes.js";
-import Logout from "./Logout.js";
+import { ROUTES_PATH } from "../constants/routes.js"
+import Logout from "./Logout.js"
 
 export default class NewBill {
   constructor({ document, onNavigate, store, localStorage }) {
-    this.document = document;
-    this.onNavigate = onNavigate;
-    this.store = store;
+    this.document = document
+    this.onNavigate = onNavigate
+    this.store = store
     const formNewBill = this.document.querySelector(
       `form[data-testid="form-new-bill"]`
-    );
-    formNewBill.addEventListener("submit", this.handleSubmit);
-    const file = this.document.querySelector(`input[data-testid="file"]`);
-    file.addEventListener("change", this.handleChangeFile);
-    this.fileUrl = null;
-    this.fileName = null;
-    this.billId = null;
-    new Logout({ document, localStorage, onNavigate });
+    )
+    formNewBill.addEventListener("submit", this.handleSubmit)
+    const file = this.document.querySelector(`input[data-testid="file"]`)
+    file.addEventListener("change", this.handleChangeFile)
+    this.fileUrl = null
+    this.fileName = null
+    this.billId = null
+    new Logout({ document, localStorage, onNavigate })
   }
 
   handleChangeFile = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const inputFile = this.document.querySelector(`input[data-testid="file"]`);
+    const inputFile = this.document.querySelector(`input[data-testid="file"]`)
     const file = this.document.querySelector(`input[data-testid="file"]`)
-      .files[0];
+      .files[0]
 
-    const valideImageType = ["image/png", "image/jpeg", "image/jpg"];
-    const errorInputFile = this.document.querySelector("#input-error-msg");
+    const valideImageType = ["image/png", "image/jpeg", "image/jpg"]
+    const errorInputFile = this.document.querySelector("#input-error-msg")
     if (!valideImageType.includes(file.type)) {
-      errorInputFile.classList.add("display-error-msg");
-      inputFile.value = "";
+      errorInputFile.classList.add("display-error-msg")
+      inputFile.value = ""
     } else {
-      errorInputFile.classList.remove("display-error-msg");
-      const email = JSON.parse(localStorage.getItem("user")).email;
-      const formData = new FormData();
+      errorInputFile.classList.remove("display-error-msg")
+      const email = JSON.parse(localStorage.getItem("user")).email
+      const formData = new FormData()
 
-      formData.append("file", file);
-      formData.append("email", email);
-      this.formData = formData;
-      this.fileName = file.name;
+      formData.append("file", file)
+      formData.append("email", email)
+      this.formData = formData
+      this.fileName = file.name
     }
-  };
+  }
 
   handleSubmit = (e) => {
-    e.preventDefault();
-    const email = JSON.parse(localStorage.getItem("user")).email;
+    e.preventDefault()
+    const email = JSON.parse(localStorage.getItem("user")).email
     const bill = {
       email,
       type: e.target.querySelector(`select[data-testid="expense-type"]`).value,
@@ -62,7 +62,7 @@ export default class NewBill {
       fileUrl: this.fileUrl,
       fileName: this.fileName,
       status: "pending",
-    };
+    }
     this.store
       .bills()
       .create({
@@ -72,15 +72,15 @@ export default class NewBill {
         },
       })
       .then(({ fileUrl, key }) => {
-        console.log(fileUrl);
-        this.billId = key;
-        this.fileUrl = fileUrl;
+        // console.log(fileUrl)
+        this.billId = key
+        this.fileUrl = fileUrl
       })
       .then(() => {
-        this.updateBill(bill);
+        this.updateBill(bill)
       })
-      .catch((error) => console.error(error));
-  };
+      // .catch((error) => console.error(error))
+  }
 
   // not need to cover this function by tests
   updateBill = (bill) => {
@@ -91,7 +91,8 @@ export default class NewBill {
         .then(() => {
           this.onNavigate(ROUTES_PATH['Bills'])
         })
-        .catch((error) => console.error(error));
+        .catch((error) => console.error(error))
+
     }
-  };
+  }
 }
